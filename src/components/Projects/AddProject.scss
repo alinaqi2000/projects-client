@@ -1,0 +1,172 @@
+@import "../../styles/variables";
+
+
+.add-project-card {
+    width: 100%;
+    box-shadow: $standard-box-shadow;
+    border-radius: $standard-border-radius;
+    margin: $margin-xs 0px;
+    display: flex;
+    align-items: flex-start;
+    padding: $margin-sm;
+
+    .image {
+        width: 40px;
+        height: 40px;
+        background: var(--primary-color);
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+
+        .img {
+            width: 40px;
+            height: 40px;
+            background-size: cover !important;
+            border-radius: 50%;
+            background-position: center !important;
+        }
+
+        span {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .upload-overlay {
+            position: absolute;
+            width: 40px;
+            opacity: 0;
+            transition: all $standard-transition-time;
+            height: 40px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: rgba(0, 0, 0, 0.6);
+            cursor: pointer;
+        }
+
+        &:hover .upload-overlay {
+            opacity: 1;
+        }
+
+        svg {
+            height: 16px;
+            color: #fff;
+        }
+    }
+
+    .body {
+        display: flex;
+        flex-direction: column;
+        width: calc(100% - 40px);
+
+        .name {
+            width: 100%;
+
+            h4 {
+                padding: 8px 12px;
+                margin: 0;
+                font-size: 16px;
+            }
+
+            input {
+                padding: 8px 6px;
+                margin: 0 0px 4px 6px;
+                font-size: 14px;
+                border: 1px solid var(--secondary-dim-color);
+                border-radius: $standard-border-radius;
+                outline: 0;
+                width: calc(100% - 6px);
+            }
+
+            .desc-box {
+                height: 116px;
+                overflow: hidden;
+                transition: max-height ease 0.5s;
+                max-height: 0px;
+
+                &.show {
+                    max-height: 116px;
+                }
+
+                textarea {
+                    padding: 8px 6px;
+                    margin: 0px 6px 4px;
+                    font-size: 12px;
+                    border: 1px solid var(--secondary-dim-color);
+                    border-radius: 15px;
+                    outline: 0;
+                    min-height: 100px;
+                    width: calc(100% - 12px);
+                }
+            }
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            width: 100%;
+
+            .show-desc {
+                outline: 0;
+                box-shadow: none;
+
+                svg {
+                    height: 14px
+                }
+            }
+
+            .btns {
+                display: flex;
+
+                .btn {
+                    background: var(--primary-color);
+                    display: flex;
+                    align-items: center;
+                    border-radius: $standard-border-radius;
+                    margin: 8px 0px;
+                    outline: 0;
+                    box-shadow: none;
+
+                    &:not(:last-child) {
+                        margin-right: $margin-xs;
+                    }
+
+                    &.cancel {
+                        background-color: var(--secondary-color);
+                    }
+
+                    svg {
+                        height: 14px
+                    }
+                }
+            }
+        }
+    }
+
+
+
+}
+
+.add-new {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+
+    .btn {
+        background: var(--primary-color);
+        display: flex;
+        align-items: center;
+        border-radius: $standard-border-radius;
+        margin: 8px 0px;
+        box-shadow: $standard-box-shadow;
+
+        &.cancel {
+            background-color: var(--secondary-color);
+        }
+
+        svg {
+            height: 16px
+        }
+    }
+}

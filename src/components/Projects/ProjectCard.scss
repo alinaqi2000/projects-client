@@ -1,0 +1,94 @@
+@import "../../styles/variables";
+
+
+.project-card {
+    width: 100%;
+    box-shadow: $sm-box-shadow;
+    border-radius: $standard-border-radius;
+    margin: $margin-xs 0px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: $margin-sm;
+
+    .image {
+        width: 40px;
+        height: 40px;
+        background: var(--primary-color);
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+
+        .img {
+            width: 40px;
+            height: 40px;
+            background-size: cover !important;
+            border-radius: 50%;
+            background-position: center !important;
+        }
+
+        span {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .upload-overlay {
+            position: absolute;
+            width: 40px;
+            opacity: 0;
+            transition: all $standard-transition-time;
+            height: 40px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: rgba(0, 0, 0, 0.6);
+            cursor: pointer;
+        }
+
+        &:hover .upload-overlay {
+            opacity: 1;
+        }
+
+        svg {
+            height: 16px;
+            color: #fff;
+        }
+    }
+
+    .name {
+        width: calc(100% - 40px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h4 {
+            padding: 8px 12px;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .actions {
+            display: flex;
+            opacity: 0;
+            transition: opacity ease $standard-transition-time;
+
+            .btn {
+                padding: 0px 2px !important;
+
+                svg {
+                    height: 16px;
+                }
+            }
+        }
+    }
+
+    &:hover {
+        .name {
+            .actions {
+                opacity: 1;
+            }
+        }
+    }
+
+
+}

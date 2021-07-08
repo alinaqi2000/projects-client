@@ -1,0 +1,44 @@
+@import "variables";
+@import "global";
+
+.cont {
+    width: calc(100% - 10vw);
+    margin: 20px auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    .top-users {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+
+    .right-product {
+        box-shadow: 0 0 8px rgb(0 0 0 / 20%);
+        border-radius: $standard-border-radius;
+        width: calc(50% - 16px);
+        margin: 3rem 8px;
+        display: flex;
+        flex-direction: column;
+
+        .image {
+            img {
+                border-top-left-radius: $standard-border-radius;
+                border-top-right-radius: $standard-border-radius;
+                width: 100%;
+            }
+        }
+
+        .title {
+            font-size: 24px;
+            margin: 12px 8px;
+        }
+
+        .body {
+            margin: 0px 12px 24px;
+        }
+    }
+
+}

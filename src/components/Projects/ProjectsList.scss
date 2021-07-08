@@ -1,0 +1,13 @@
+@import "../../styles/variables";
+
+
+.left-projects {
+    margin: 3rem 0px;
+
+    .projects-cards {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+    }
+
+}
