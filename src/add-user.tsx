@@ -2,6 +2,7 @@ import "./styles/add-user.scss"
 import axios from "../node_modules/axios/index"
 
 import * as $ from 'jquery'
+import env from "./environment/environment";
 
 interface UserForm {
     name: string
@@ -32,7 +33,7 @@ $(document).on("submit", "#user-form", async function (e: any) {
     isSent && e.target.reset()
 })
 async function sendUser(user: UserForm) {
-    const res = await axios.post<{ message?: string, error?: string }>("http://localhost:5000/users/add", user).then(resp => resp.data)
+    const res = await axios.post<{ message?: string, error?: string }>(`${env.API_URL}users/add`, user).then(resp => resp.data)
     if (res.error) {
         console.log(res.error)
     }
