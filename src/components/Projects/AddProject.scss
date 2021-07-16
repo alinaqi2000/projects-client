@@ -110,9 +110,12 @@
             .show-desc {
                 outline: 0;
                 box-shadow: none;
+                display: flex;
+                align-items: center;
 
                 svg {
-                    height: 14px
+                    height: 16px;
+                    margin: 2px 0px;
                 }
             }
 

@@ -1,5 +1,3 @@
-// Generated using webpack-cli https://github.com/webpack/webpack-cli
-
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -11,11 +9,12 @@ const stylesHandler = isProduction ? MiniCssExtractPlugin.loader : 'style-loader
 
 const htmlFiles = [
     { name: 'index.html', chunks: ['main'] },
-    { name: 'add-user.html', chunks: ['addUser'] }
+    { name: 'add-user.html', chunks: ['addUser'] },
+    { name: 'add-admin.html', chunks: ['addAdmin'] }
 ];
 
 const config = {
-    entry: { main: './src/index.tsx', addUser: './src/add-user.tsx' },
+    entry: { main: './src/index.tsx', addUser: './src/add-user.tsx', addAdmin: './src/add-admin.tsx' },
     devtool: 'inline-source-map',
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -65,7 +64,6 @@ module.exports = () => {
         config.mode = 'production';
 
         config.plugins.push(new MiniCssExtractPlugin());
-
 
     } else {
         config.mode = 'development';

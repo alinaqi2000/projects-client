@@ -4,6 +4,11 @@
 .left-projects {
     margin: 3rem 0px;
 
+    .list-title {
+        font-size: 18px;
+        margin: 18px 0;
+    }
+
     .projects-cards {
         display: flex;
         width: 100%;

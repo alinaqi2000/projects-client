@@ -82,7 +82,8 @@
         }
     }
 
-    &:hover {
+    &:hover,
+    &:focus {
         .name {
             .actions {
                 opacity: 1;

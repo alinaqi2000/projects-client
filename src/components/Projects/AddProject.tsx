@@ -1,47 +1,34 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { Project } from '../../models/Project'
 import "./AddProject.scss"
-import { checkImage } from '../../utils/ImageUtils'
 import { Edit2, Plus, Save, XCircle, ChevronUp, ChevronDown } from 'react-feather';
 import UsersService from '../../services/UsersService';
 import { take } from 'rxjs';
 import axios from 'axios';
 import env from '../../environment/environment';
-import { toastSuccess, toastError } from '../../utils/ToastUtils';
+import LoadImage from '../Layout/LoadImage';
+import UIService from '../../services/UIService';
+import ProjectsService from '../../services/ProjectsService';
 
 export default function AddProject() {
     const [project, setProject] = useState<Project | null>(new Project(-1, -1, "New Project", "", "", new Date()))
     const [addNew, setAddNew] = useState(false);
-    const [image, setImage] = useState(<span>N</span>);
     const [showImage, setShowImage] = useState(false);
     const [showDesc, setShowDesc] = useState(false);
 
-    const loadProjectImage = async () => {
-        if (project.image_url) {
-            const imageExists = await checkImage(project.image_url);
-            if (imageExists)
-                return setImage(<div className="img" style={{ background: `url('${project.image_url}')` }}></div>)
-        }
-        return setImage(<span>{project.name.charAt(0).toUpperCase()}</span>)
-    }
 
-    useEffect(() => {
-        loadProjectImage()
-    }, [project])
+
     const saveProject = async () => {
-        const { name, description, image_url } = project
-        let user_id = -1;
-        UsersService.activeUser.pipe(take(1)).subscribe((user) => { user_id = user.id })
-        const res = await axios.post<{ message: string }>(env.API_URL + `projects/add`, { name, description, image_url, user_id }).then(resp => resp.data)
-        if (res.message) {
-            toastSuccess(res.message)
-            setProject(new Project(-1, -1, "New Project", "", "", new Date()))
-            setImage(<span>N</span>)
-            setShowImage(false)
-            setShowDesc(false)
-            setAddNew(false)
-        } else {
-            toastError("Unknown exception!")
+        setProject(new Project(-1, -1, "New Project", "", "", new Date()))
+        setShowImage(false)
+        setShowDesc(false)
+        setAddNew(false)
+        const res = await ProjectsService.addProject(project)
+        if (!res) {
+            setProject(project)
+            setShowImage(true)
+            setShowDesc(true)
+            setAddNew(true)
         }
     }
     return (
@@ -54,7 +41,7 @@ export default function AddProject() {
                 ) : (
                     <div className={`add-project-card`} >
                         <div className="image">
-                            {image}
+                            <LoadImage {...project} />
                             <div onClick={() => setShowImage(!showImage)} className="upload-overlay">
                                 <Edit2 />
                             </div>

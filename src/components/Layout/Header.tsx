@@ -1,12 +1,13 @@
 import React from 'react'
-
+import "./Header.scss"
 export default function Header() {
     return (
-        <div className="cont">
-            <h3>
-                Task Managment
-            </h3>
-
-        </div>
+        <header>
+            <div className="cont">
+                <h3 className="brand">
+                    Task Managment
+                </h3>
+            </div>
+        </header>
     )
 }

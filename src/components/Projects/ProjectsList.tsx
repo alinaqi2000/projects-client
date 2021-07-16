@@ -8,56 +8,56 @@ import "./ProjectsList.scss"
 import ProjectsService from '../../services/ProjectsService'
 import UsersService from '../../services/UsersService'
 import env from '../../environment/environment';
-import axios from 'axios';
 import { User } from '../../models/User';
+import ProjectCardSkeleton from '../Skeletons/ProjectCardSkeleton';
 
 var pusher = new Pusher(env.PUSHER_APP_NAME, { cluster: env.PUSHER_APP_CLUSTER })
 
-export default function ProjectsList() {
+export default function ProjectsList({ user }: { user: User }) {
     const [projects, setProjects] = useState<Project[]>([])
+    const [isLoading, setLoading] = useState(false)
     const [currentUser, setCurrentUser] = useState<User | null>(null)
-
-    async function fetchProjects() {
-        if (currentUser) {
-            const data = await axios.get<{ data: Project[] }>(env.API_URL + `users/${currentUser.id}/projects`).then(resp => resp.data.data)
-            ProjectsService.projects.next(data);
-        }
-    }
 
     useEffect(() => {
         if (currentUser) {
-            fetchProjects()
+            ProjectsService.firtsFetchProjects(currentUser)
             var channel = pusher.subscribe('projects_' + currentUser.id);
-            channel.bind('update-projects', () => fetchProjects());
+            channel.bind('update-projects', (data: { id: number }) => {
+                if (data.id != user.id) {
+                    ProjectsService.fetchProjects(currentUser)
+                }
+            });
         }
         // return () => pusher.disconnect()
     }, [currentUser])
 
     useEffect(() => {
         UsersService.activeUser.subscribe(setCurrentUser)
-        ProjectsService.projects.subscribe((ps) => {
-            setProjects([...ps])
-        })
+        ProjectsService.projects.subscribe((ps) => { setProjects([...ps]) })
+        ProjectsService.isFetching.subscribe(setLoading)
         return () => {
             UsersService.activeUser.unsubscribe()
             ProjectsService.projects.unsubscribe()
+            ProjectsService.isFetching.unsubscribe()
         }
     }, [])
 
     return (
         <div className="left-projects">
-            {currentUser ? <h4>{currentUser.name}'s Projects</h4> : <h4>No user selected</h4>}
+            {currentUser ? <h4 className="list-title">{currentUser.name}'s Projects</h4> : <h4 className="list-title">No user selected</h4>}
             <div className="projects-cards">
 
                 {
-                    projects.length ?
-                        projects.map(project => <ProjectCard key={project.id} {...project} />) :
-                        (<p>No projects found</p>)
+                    isLoading ?
+                        [1, 2, 3].map(v => <ProjectCardSkeleton key={v} />)
+                        : projects.length ?
+                            projects.map(project => <ProjectCard key={project.id} {...project} />) :
+                            (<p>No projects found</p>)
 
                 }
+
             </div>
             {currentUser ? <AddProject /> : ""}
-
-        </div >
+        </div>
     )
 }
